@@ -76,9 +76,10 @@ import java.util.function.Consumer;
                 return;
             }
             // 判断发送的消息是否为空
-
+            log.info("发送全体消息：{}",msg);
             for (Map.Entry<String, SseEmitter> entry : sseCache.entrySet()) {
                 MessageVo messageVo = new MessageVo();
+                messageVo.setFromId("System");
                 messageVo.setClientId(entry.getKey());
                 messageVo.setData(msg);
                 sendMsgToClientByClientId(entry.getKey(), messageVo, entry.getValue());
@@ -136,7 +137,7 @@ import java.util.function.Consumer;
                 // 推送消息失败后，每隔10s推送一次，推送5次
                 for (int i = 0; i < 5; i++) {
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(100);
                         sseEmitter = sseCache.get(clientId);
                         if (sseEmitter == null) {
                             log.error("{}的第{}次消息重推失败，未创建长链接", clientId, i + 1);
@@ -190,15 +191,16 @@ import java.util.function.Consumer;
                 // 推送消息失败后，每隔10s推送一次，推送5次
                 for (int i = 0; i < 5; i++) {
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(100);
                         SseEmitter sseEmitter = sseCache.get(clientId);
                         if (sseEmitter == null) {
                             log.error("SseEmitterServiceImpl[errorCallBack]：第{}次消息重推失败,未获取到 {} 对应的长链接", i + 1, clientId);
                             continue;
                         }
-                        sseEmitter.send("失败后重新推送");
+                        sseEmitter. send("失败后重新推送");
                     } catch (Exception e) {
                         e.printStackTrace();
+                        closeConnect(clientId);
                     }
                 }
             };

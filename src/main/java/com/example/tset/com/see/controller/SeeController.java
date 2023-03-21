@@ -12,6 +12,7 @@ import javax.annotation.Resource;
      * SSE长链接
      */
     @RestController
+    @CrossOrigin("*")
     @RequestMapping("/sse")
     public class SeeController {
 
@@ -25,7 +26,7 @@ import javax.annotation.Resource;
         }
 
         @PostMapping("/broadcast")
-        public void sendMessageToAllClient(@RequestBody(required = false) String msg) {
+        public void sendMessageToAllClient(@RequestParam(name = "msg") String msg) {
             sseService.sendMessageToAllClient(msg);
         }
 
