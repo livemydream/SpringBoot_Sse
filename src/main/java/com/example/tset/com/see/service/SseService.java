@@ -34,7 +34,7 @@ public interface SseService {
      * @param clientId 客户端ID
      * @param msg      消息内容
      */
-    void sendMessageToOneClient(String clientId, String msg);
+    void sendMessageToOneClient(String clientId, String msg, String fromId);
 
     /**
      * 关闭连接

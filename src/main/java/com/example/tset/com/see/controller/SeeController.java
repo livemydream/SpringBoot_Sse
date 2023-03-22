@@ -35,7 +35,7 @@ import javax.annotation.Resource;
             if (messageVo.getClientId().isEmpty()) {
                 return;
             }
-            sseService.sendMessageToOneClient(messageVo.getClientId(), messageVo.getData());
+            sseService.sendMessageToOneClient(messageVo.getClientId(), messageVo.getData(), messageVo.getFromId());
         }
 
         @GetMapping("/closeConnect")
